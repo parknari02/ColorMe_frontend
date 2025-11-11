@@ -11,6 +11,7 @@ import { mockCosmetics } from '../../data/mockData';
 export function CosmeticsStep() {
     const {
         personalColor,
+        personalColorClass,
         cosmeticPreferences,
         selectedCosmeticCategory,
         setSelectedCosmeticCategory,
@@ -22,6 +23,13 @@ export function CosmeticsStep() {
     // API로 받은 제품이 있으면 사용, 없으면 mock 데이터 사용
     const hasApiProducts = recommendedProducts.length > 0;
 
+    // 표시할 퍼스널 컬러 이름 결정
+    // 이미지로 분석받은 경우: personalColorClass (예: "summer") 사용
+    // 수동으로 선택한 경우: personalColor (예: "summer-light") 사용
+    const displayColorName = personalColorClass
+        ? getPersonalColorName(personalColorClass)
+        : getPersonalColorName(personalColor);
+
     return (
         <>
             {cosmeticPreferences && (
@@ -31,7 +39,7 @@ export function CosmeticsStep() {
             )}
             <ChatMessage type="bot" delay={0.2}>
                 <p>
-                    {getPersonalColorName(personalColor)}에 어울리는 화장품을 추천해드릴게요! 💄
+                    {displayColorName}에 어울리는 화장품을 추천해드릴게요! 💄
                 </p>
                 {cosmeticPreferences && (
                     <div className="mt-2 p-2 bg-gradient-to-r from-yellow-50 to-pink-50 rounded-lg border border-primary/20">

@@ -8,6 +8,10 @@ interface AppContextType {
     setStep: (step: Step) => void;
     personalColor: string;
     setPersonalColor: (color: string) => void;
+    personalColorNote: string | null;
+    setPersonalColorNote: (note: string | null) => void;
+    personalColorClass: string | null;
+    setPersonalColorClass: (colorClass: string | null) => void;
     uploadedImage: string | null;
     setUploadedImage: (image: string | null) => void;
     cosmeticPreferences: string;
@@ -26,6 +30,8 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
     const [step, setStep] = useState<Step>('welcome');
     const [personalColor, setPersonalColor] = useState<string>('');
+    const [personalColorNote, setPersonalColorNote] = useState<string | null>(null);
+    const [personalColorClass, setPersonalColorClass] = useState<string | null>(null);
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const [cosmeticPreferences, setCosmeticPreferences] = useState<string>('');
     const [stylePreferences, setStylePreferences] = useState<{ bodyType: string; style: string } | null>(null);
@@ -42,6 +48,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
             'autumn-deep': '가을 딥',
             'winter-bright': '겨울 브라이트',
             'winter-dark': '겨울 다크',
+            'spring': '봄 웜톤',
+            'summer': '여름 쿨톤',
+            'autumn': '가을 웜톤',
+            'winter': '겨울 쿨톤',
         };
         return colorNames[color] || color;
     };
@@ -53,6 +63,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
                 setStep,
                 personalColor,
                 setPersonalColor,
+                personalColorNote,
+                setPersonalColorNote,
+                personalColorClass,
+                setPersonalColorClass,
                 uploadedImage,
                 setUploadedImage,
                 cosmeticPreferences,
